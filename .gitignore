@@ -1,27 +1,26 @@
-*.py[co]
+# -*- coding: cp1251 -*-
+'''
+Created on 21.08.2012
 
-# Packages
-*.egg
-*.egg-info
-dist
-build
-eggs
-parts
-bin
-var
-sdist
-develop-eggs
-.installed.cfg
+@author: Дина
+'''
 
-# Installer logs
-pip-log.txt
+from wikitools import *
+import codecs
 
-# Unit test / coverage reports
-.coverage
-.tox
+site = wiki.Wiki("http://en.wiktionary.org/w/api.php")
+params = {'action' : 'query',
+          'list' : 'categorymembers',
+          'cmtitle' : 'Category:English uncountable nouns',
+          'cmlimit' : '10'
+          }
+request = api.APIRequest(site,params)
+result = request.query()
 
-#Translations
-*.mo
+output_file = codecs.open("D://Python27//MyProgs//uncountable2.txt", encoding="utf-8", mode="w")
 
-#Mr Developer
-.mr.developer.cfg
+for dict in result['query']['categorymembers']:
+    output_file.write(dict['title']+'\n')
+#print result
+
+output_file.close()
